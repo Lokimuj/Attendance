@@ -1,17 +1,18 @@
 package model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Student {
-    private String name;
+    private String firstName;
+    private String lastName;
     private String ritID;
     private char id;
     private AttendanceDetail[] details;
 
-    public Student(String name, String ritID, char id, int days){
+    public Student(String firstName, String lastName, String ritID, char id, int days){
         details = new AttendanceDetail[days];
-        this.name = name;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.ritID = ritID;
         this.id = id;
     }
@@ -22,8 +23,30 @@ public class Student {
             if(i<detailDays.length){
                 String day = detailDays[i].trim();
                 details[i] = AttendanceDetail.readAttendanceDetail(day);
-                days.get(i).
+            } else{
+                details[i] = AttendanceDetail.CreateAbsentDetail();
             }
+            days.get(i).linkStudent(this,details[i]);
         }
+    }
+
+    public char getId() {
+        return id;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getRitID() {
+        return ritID;
+    }
+
+    public String display(){
+        return lastName + "," + firstName + "," + ritID + "," + id;
     }
 }

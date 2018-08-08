@@ -6,10 +6,14 @@ import java.util.HashMap;
 public class AttendanceDetail {
     public static final char ABSENT_CHARACTER_ID = 'X';
     public static final char NO_PARTNER_ID = '/';
+    public static final char ABSENT_PREFIX = 'X';
+    public static final char NO_COMPUTER_PREFIX = 'N';
+    public static final char COMPUTER_PREFIX = 'C';
+
     public enum Type{
-        ABSENT('X'),
-        NO_COMPUTER('N'),
-        COMPUTER('C');
+        ABSENT(ABSENT_PREFIX),
+        NO_COMPUTER(NO_COMPUTER_PREFIX),
+        COMPUTER(COMPUTER_PREFIX);
 
         char rep;
 
@@ -56,11 +60,11 @@ public class AttendanceDetail {
             return null;
         }
         switch (detail.charAt(0)){
-            case 'X':
+            case ABSENT_PREFIX:
                 return CreateAbsentDetail();
-            case 'N':
+            case NO_COMPUTER_PREFIX:
                 return CreateNoComputerDetail(detail.charAt(1));
-            case 'C':
+            case COMPUTER_PREFIX:
                 return CreateComputerDetail(detail.charAt(1));
             default:
                 return null;
