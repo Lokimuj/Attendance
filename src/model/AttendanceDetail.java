@@ -120,6 +120,11 @@ public class AttendanceDetail {
         }
     }
 
+    @Override
+    public String toString() {
+        return type.print() + partner;
+    }
+
     public interface Updater{
         void update(Type type, char partner);
     }

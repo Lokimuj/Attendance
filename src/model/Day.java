@@ -1,17 +1,20 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
 public class Day {
+    private String date;
     HashMap<Student,AttendanceDetail> studentDetails;
     List<Student> noComp;
     List<Student> comp;
     boolean upToDate = false;
 
 
-    public Day(){
+    public Day(String date){
+        this.date = date;
         studentDetails = new HashMap<>();
         noComp = new ArrayList<>();
         comp = new ArrayList<>();
@@ -22,9 +25,7 @@ public class Day {
         studentDetails.put(student,detail);
     }
 
-    public List<List<Student>> split() {
-        List<List<Student>> pair = new ArrayList<>(2);
-
+    public synchronized void split() {
         if (!upToDate) {
             noComp = new ArrayList<>();
             comp = new ArrayList<>();
@@ -39,11 +40,47 @@ public class Day {
             }
             upToDate = true;
         }
-        pair.set(0, new ArrayList<>(noComp));
-        pair.set(1, new ArrayList<>(comp));
-        return pair;
     }
 
+    public synchronized List<Student> getNoComp(){
+        return noComp;
+    }
 
+    public synchronized List<Student> getComp() {
+        return comp;
+    }
 
+    public synchronized List<StudentPair> pairUp(){
+        if(!upToDate){
+            split();
+        }
+        Collections.shuffle(comp);
+        Collections.shuffle(noComp);
+        ArrayList<StudentPair> pairs = new ArrayList<>();
+        int i = 0;
+        for(;i<comp.size() && i<noComp.size();i++){
+            pairs.add(new StudentPair(comp.get(i),noComp.get(i)));
+        }
+
+        for(;i<comp.size()-1;i+=2){
+            pairs.add(new StudentPair(comp.get(i),comp.get(i+1)));
+        }
+        if(i<comp.size()){
+            pairs.add(new StudentPair(comp.get(i),null));
+        }
+
+        for(;i<noComp.size()-1;i+=2){
+            pairs.add(new StudentPair(noComp.get(i),noComp.get(i+1)));
+        }
+        if(i<noComp.size()){
+            pairs.add(new StudentPair(noComp.get(i),null));
+        }
+
+        return pairs;
+    }
+
+    @Override
+    public int hashCode() {
+        return date.hashCode();
+    }
 }

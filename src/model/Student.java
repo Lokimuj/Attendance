@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Student {
@@ -7,27 +8,33 @@ public class Student {
     private String lastName;
     private String ritID;
     private char id;
-    private AttendanceDetail[] details;
+    private List<AttendanceDetail> details;
 
     public Student(String firstName, String lastName, String ritID, char id, int days){
-        details = new AttendanceDetail[days];
+        details = new ArrayList<>();
         this.firstName = firstName;
         this.lastName = lastName;
         this.ritID = ritID;
         this.id = id;
     }
 
-    public void setup(List<Day> days, String inp){
+    public void setup(DayCalendar days, String inp){
         String[] detailDays = inp.split(",");
-        for(int i = 0; i<details.length; i++){
+        for(int i = 0; i<days.size(); i++){
+            AttendanceDetail detail;
             if(i<detailDays.length){
                 String day = detailDays[i].trim();
-                details[i] = AttendanceDetail.readAttendanceDetail(day);
+                detail = AttendanceDetail.readAttendanceDetail(day);
             } else{
-                details[i] = AttendanceDetail.CreateAbsentDetail();
+                detail = AttendanceDetail.CreateAbsentDetail();
             }
-            days.get(i).linkStudent(this,details[i]);
+            details.add(detail);
+            days.getDay(i).linkStudent(this,detail);
         }
+    }
+
+    public List<AttendanceDetail> getDetails(){
+        return details;
     }
 
     public char getId() {
@@ -47,6 +54,15 @@ public class Student {
     }
 
     public String display(){
-        return lastName + "," + firstName + "," + ritID + "," + id;
+        return id + ". " + lastName + "," + firstName + "," + ritID;
+    }
+
+    @Override
+    public String toString() {
+        String out = firstName + " " + lastName + ", " + ritID + ", " + id +": ";
+        for(var detail : details){
+            out += detail.toString() + " ";
+        }
+        return out;
     }
 }
