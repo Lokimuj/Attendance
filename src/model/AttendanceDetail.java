@@ -26,46 +26,48 @@ public class AttendanceDetail {
     }
 
     private Type type;
-    private char partner;
+    private Student partner;
+    private char partnerID;
 
     private HashMap<Object,Updater> updaters = new HashMap<>();
 
-    private AttendanceDetail(Type type, char partner){
+    private AttendanceDetail(Type type, char partner, StudentRoster roster){
         this.type = type;
-        this.partner = partner;
+        this.partnerID = partner;
+
     }
 
-    public static AttendanceDetail CreateAbsentDetail(){
-        return new AttendanceDetail(Type.ABSENT,ABSENT_CHARACTER_ID);
+    public static AttendanceDetail CreateAbsentDetail(StudentRoster roster){
+        return new AttendanceDetail(Type.ABSENT,ABSENT_CHARACTER_ID,roster);
     }
 
-    public static AttendanceDetail CreateNoComputerDetail(char partner){
-        return new AttendanceDetail(Type.NO_COMPUTER,partner);
+    public static AttendanceDetail CreateNoComputerDetail(StudentRoster roster,char partner){
+        return new AttendanceDetail(Type.NO_COMPUTER,partner,roster);
     }
 
-    public static AttendanceDetail CreateNoComputerDetail(){
-        return CreateNoComputerDetail(NO_PARTNER_ID);
+    public static AttendanceDetail CreateNoComputerDetail(StudentRoster roster){
+        return CreateNoComputerDetail(roster, NO_PARTNER_ID);
     }
 
-    public static AttendanceDetail CreateComputerDetail(char partner){
-        return new AttendanceDetail(Type.COMPUTER,partner);
+    public static AttendanceDetail CreateComputerDetail(StudentRoster roster, char partner){
+        return new AttendanceDetail(Type.COMPUTER,partner,roster);
     }
 
-    public static AttendanceDetail CreateComputerDetail(){
-        return CreateComputerDetail(NO_PARTNER_ID);
+    public static AttendanceDetail CreateComputerDetail(StudentRoster roster){
+        return CreateComputerDetail(roster, NO_PARTNER_ID);
     }
 
-    public static AttendanceDetail readAttendanceDetail(String detail){
+    public static AttendanceDetail readAttendanceDetail(StudentRoster roster, String detail){
         if(detail.length()!=2){
             return null;
         }
         switch (detail.charAt(0)){
             case ABSENT_PREFIX:
-                return CreateAbsentDetail();
+                return CreateAbsentDetail(roster);
             case NO_COMPUTER_PREFIX:
-                return CreateNoComputerDetail(detail.charAt(1));
+                return CreateNoComputerDetail(roster, detail.charAt(1));
             case COMPUTER_PREFIX:
-                return CreateComputerDetail(detail.charAt(1));
+                return CreateComputerDetail(roster, detail.charAt(1));
             default:
                 return null;
         }
@@ -75,8 +77,8 @@ public class AttendanceDetail {
         return type.print() + partner;
     }
 
-    public char getPartner() {
-        return partner;
+    public char getPartnerID() {
+        return partnerID;
     }
 
     public Type getType() {
@@ -86,22 +88,16 @@ public class AttendanceDetail {
     public void changeType(Type type){
         this.type = type;
         if(type == Type.ABSENT){
-            this.partner = ABSENT_CHARACTER_ID;
-        }else if(partner == ABSENT_CHARACTER_ID){
-            partner = NO_PARTNER_ID;
+            this.partnerID = ABSENT_CHARACTER_ID;
+        }else if(partnerID == ABSENT_CHARACTER_ID){
+            partnerID = NO_PARTNER_ID;
         }
         update();
     }
 
-    public void changePartner(char partner){
-        this.partner = partner;
-        update();
-    }
-
-
     public void update(){
         for(var updater: updaters.values()){
-            updater.update(this.type,this.partner);
+            updater.update(this.type,this.partnerID);
         }
     }
 

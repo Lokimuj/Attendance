@@ -61,10 +61,6 @@ public class Day {
         for(;i<comp.size() && i<noComp.size();i++){
             pairs.add(new StudentPair(comp.get(i),noComp.get(i)));
         }
-
-        for(;i<comp.size()-1;i+=2){
-            pairs.add(new StudentPair(comp.get(i),comp.get(i+1)));
-        }
         if(i<comp.size()){
             pairs.add(new StudentPair(comp.get(i),null));
         }

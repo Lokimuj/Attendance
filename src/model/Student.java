@@ -1,40 +1,68 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Student {
+
+    private static Set<Character> ids = new HashSet<>();
+    private static char nextID = 'a';
+    public static final Student EMPTY_STUDENT = new Student();
+
     private String firstName;
     private String lastName;
     private String ritID;
     private char id;
+    private boolean hasID;
     private List<AttendanceDetail> details;
+    private DayCalendar calendar;
 
-    public Student(String firstName, String lastName, String ritID, char id, int days){
+    private Student(){}
+
+    public Student(String inp, DayCalendar days){
         details = new ArrayList<>();
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.ritID = ritID;
-        this.id = id;
+        calendar = days;
+
+        String[] info = inp.split(",");
+        this.lastName = info[0];
+        this.firstName = info[1];
+        this.ritID = info[2];
+        if(info.length>=4){
+            this.id = info[3].charAt(0);
+            ids.add(this.id);
+            hasID = true;
+        }else{
+            hasID = false;
+        }
     }
 
-    public void setup(DayCalendar days, String inp){
+    public void setup(StudentRoster roster, String inp){
         String[] detailDays = inp.split(",");
-        for(int i = 0; i<days.size(); i++){
+        for(int i = 0; i<calendar.size(); i++){
             AttendanceDetail detail;
             if(i<detailDays.length){
                 String day = detailDays[i].trim();
-                detail = AttendanceDetail.readAttendanceDetail(day);
+                detail = AttendanceDetail.readAttendanceDetail(roster, day);
             } else{
-                detail = AttendanceDetail.CreateAbsentDetail();
+                detail = AttendanceDetail.CreateAbsentDetail(roster);
             }
             details.add(detail);
-            days.getDay(i).linkStudent(this,detail);
+            calendar.getDay(i).linkStudent(this,detail);
         }
     }
 
     public List<AttendanceDetail> getDetails(){
         return details;
+    }
+
+    public AttendanceDetail getDetail(Day day){
+        return details.get(calendar.getIndex(day));
+    }
+
+    public boolean hasID() {
+        return hasID;
     }
 
     public char getId() {

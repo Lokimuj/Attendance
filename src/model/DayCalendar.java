@@ -7,13 +7,15 @@ import java.util.List;
 
 public class DayCalendar {
     private HashMap<Day,Integer> indexMap = new HashMap<>();
-    private List<Day> days;
-    int curInd = 0;
+    private List<Day> days = new ArrayList<>();
 
-    public DayCalendar(Collection<Day> days){
-        this.days = new ArrayList<>(days);
-        for(Day day : days){
-            indexMap.put(day,curInd++);
+
+    public DayCalendar(String inpLine){
+        String[] dates = inpLine.split(",");
+        for(int i = 0; i<dates.length; i++){
+            Day day = new Day(dates[i].replaceAll(" ",""));
+            days.add(day);
+            indexMap.put(day,i);
         }
     }
 
@@ -28,6 +30,4 @@ public class DayCalendar {
     public int size(){
         return days.size();
     }
-
-
 }
