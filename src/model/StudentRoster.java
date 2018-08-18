@@ -16,12 +16,14 @@ public class StudentRoster {
 
     public void addStudent(Student student){
         students.add(student);
+        refreshID();
         if(isInitialized){
-            if(student.hasID()){
-                if(usedIDs.contains(student.getId())){
-
-                }
+            if(!student.hasID() || usedIDs.contains(student.getId())){
+                student.setId(nextID);
             }
+            usedIDs.add(student.getId());
+            idMap.put(student.getId(),student);
+            update();
         }
     }
 
@@ -57,6 +59,7 @@ public class StudentRoster {
             refreshID();
         }
         isInitialized = true;
+        update();
     }
 
     private void refreshID(){
@@ -65,6 +68,23 @@ public class StudentRoster {
         }
     }
 
+
+    public String write(){
+        String out = "";
+        for(Student student: students){
+            out+= student.write() + "\n";
+        }
+        return out;
+    }
+
+    @Override
+    public String toString() {
+        String out = "ROSTER:\n";
+        for(Student student: students){
+            out += student.display()+"\n";
+        }
+        return out;
+    }
 
     public void update(){
         for(var updater: updaters.values()){

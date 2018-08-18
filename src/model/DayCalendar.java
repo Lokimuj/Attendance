@@ -30,4 +30,23 @@ public class DayCalendar {
     public int size(){
         return days.size();
     }
+
+    public String write(){
+        String out = "";
+        for(Day day: days){
+            out+=day.write() + ",";
+        }
+        return out.substring(0,out.length()-1);
+    }
+
+    @Override
+    public String toString() {
+        String out = "CALENDAR:\n";
+        int i = 1;
+        for(Day day: days){
+            out+= i++ + ": " + day + "\n";
+        }
+
+        return out;
+    }
 }

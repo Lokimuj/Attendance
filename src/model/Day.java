@@ -75,6 +75,19 @@ public class Day {
         return pairs;
     }
 
+    public String write(){
+        return date;
+    }
+
+    @Override
+    public String toString() {
+        String out = "DAY " + date + ":";
+        for(Student student: studentDetails.keySet()){
+            out += "\n" + student.display() + " : " + studentDetails.get(student).write();
+        }
+        return out;
+    }
+
     @Override
     public int hashCode() {
         return date.hashCode();

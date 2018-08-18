@@ -4,8 +4,6 @@ import java.util.*;
 
 public class Student {
 
-    private static Set<Character> ids = new HashSet<>();
-    private static char nextID = 'a';
     public static final Student EMPTY_STUDENT = new Student();
 
     private String firstName;
@@ -31,10 +29,23 @@ public class Student {
         this.ritID = info[2];
         if(info.length>=4){
             this.id = info[3].charAt(0);
-            ids.add(this.id);
             hasID = true;
         }else{
             hasID = false;
+        }
+    }
+
+    public Student(String lastName, String firstName, String ritID, DayCalendar days, StudentRoster roster){
+        this.calendar = days;
+        details = new ArrayList<>();
+        this.lastName = lastName;
+        this.firstName = firstName;
+        this.ritID = ritID;
+        hasID = false;
+        for(int i = 0; i<days.size(); i++){
+            AttendanceDetail detail = AttendanceDetail.CreateAbsentDetail(roster);
+            details.add(detail);
+            calendar.getDay(i).linkStudent(this,detail);
         }
     }
 
@@ -44,7 +55,7 @@ public class Student {
             AttendanceDetail detail;
             if(i<detailDays.length){
                 String day = detailDays[i].trim();
-                detail = AttendanceDetail.readAttendanceDetail(roster, day);
+                detail = AttendanceDetail.readAttendanceDetail(roster, day.replaceAll("\\s+",""));
             } else{
                 detail = AttendanceDetail.CreateAbsentDetail(roster);
             }
@@ -85,6 +96,14 @@ public class Student {
         return ritID;
     }
 
+    public String write(){
+        String out = lastName + "," + firstName + "," + ritID + "," + id+"\n";
+        for(AttendanceDetail detail: details){
+            out+=detail.write()+",";
+        }
+        return out.substring(0,out.length()-1);
+    }
+
     public String display(){
         return id + ". " + lastName + "," + firstName + "," + ritID;
     }
@@ -92,11 +111,12 @@ public class Student {
     @Override
     public String toString() {
         String out = firstName + " " + lastName + ", " + ritID + ", " + id +": ";
-        for(var detail : details){
-            out += detail.toString() + " ";
-        }
+//        for(var detail : details){
+//            out += detail.toString() + " ";
+//        }
         return out;
     }
+
 
     public void update(){
         for(var updater: updaters.values()){

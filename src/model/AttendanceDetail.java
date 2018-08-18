@@ -42,7 +42,7 @@ public class AttendanceDetail {
         }else{
             roster.subscribe(()->{
                 if(roster.isIDRegistered(partnerID)){
-                    roster.getStudent(partnerID);
+                    this.partner = roster.getStudent(partnerID);
                     partnerKey = this.partner.subscribe(c ->{
                         this.partnerID = c;
                     });
@@ -89,7 +89,7 @@ public class AttendanceDetail {
         }
     }
 
-    public String displayString(){
+    public String write(){
         return type.print() + partnerID;
     }
 
@@ -153,7 +153,7 @@ public class AttendanceDetail {
 
     @Override
     public String toString() {
-        return type.print() + partner;
+        return type.print() + (partnerID != NO_PARTNER_ID ? partner.display() : "/");
     }
 
     public interface Updater{
