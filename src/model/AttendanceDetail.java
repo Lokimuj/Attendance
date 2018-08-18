@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class AttendanceDetail {
-    public static final char ABSENT_CHARACTER_ID = 'X';
     public static final char NO_PARTNER_ID = '/';
     public static final char ABSENT_PREFIX = 'X';
     public static final char NO_COMPUTER_PREFIX = 'N';
@@ -28,17 +27,34 @@ public class AttendanceDetail {
     private Type type;
     private Student partner;
     private char partnerID;
+    private Object partnerKey;
+    private StudentRoster roster;
 
     private HashMap<Object,Updater> updaters = new HashMap<>();
 
-    private AttendanceDetail(Type type, char partner, StudentRoster roster){
+    private AttendanceDetail(Type type, char partnerID, StudentRoster roster){
         this.type = type;
-        this.partnerID = partner;
-
+        this.partnerID = partnerID;
+        this.roster = roster;
+        if(roster.isIDRegistered(partnerID)){
+            this.partner = roster.getStudent(partnerID);
+            partnerKey = this.partner.subscribe(c -> this.partnerID = c);
+        }else{
+            roster.subscribe(()->{
+                if(roster.isIDRegistered(partnerID)){
+                    roster.getStudent(partnerID);
+                    partnerKey = this.partner.subscribe(c ->{
+                        this.partnerID = c;
+                    });
+                }else{
+                    this.partnerID = NO_PARTNER_ID;
+                }
+            });
+        }
     }
 
     public static AttendanceDetail CreateAbsentDetail(StudentRoster roster){
-        return new AttendanceDetail(Type.ABSENT,ABSENT_CHARACTER_ID,roster);
+        return new AttendanceDetail(Type.ABSENT,NO_PARTNER_ID,roster);
     }
 
     public static AttendanceDetail CreateNoComputerDetail(StudentRoster roster,char partner){
@@ -74,11 +90,32 @@ public class AttendanceDetail {
     }
 
     public String displayString(){
-        return type.print() + partner;
+        return type.print() + partnerID;
     }
 
     public char getPartnerID() {
         return partnerID;
+    }
+
+    public void changePartner(char id){
+        if(partnerID != NO_PARTNER_ID){
+            partner.unsubscribe(partnerKey);
+        }
+        partnerID = id;
+        partner = roster.getStudent(id);
+        partnerKey = this.partner.subscribe(c -> this.partnerID = c);
+        update();
+    }
+
+    public void clearPartner(){
+        if(partnerID == NO_PARTNER_ID){
+            return;
+        }
+        partner.unsubscribe(partnerKey);
+        partnerID = NO_PARTNER_ID;
+        partner = null;
+        partnerKey = null;
+        update();
     }
 
     public Type getType() {
@@ -88,9 +125,7 @@ public class AttendanceDetail {
     public void changeType(Type type){
         this.type = type;
         if(type == Type.ABSENT){
-            this.partnerID = ABSENT_CHARACTER_ID;
-        }else if(partnerID == ABSENT_CHARACTER_ID){
-            partnerID = NO_PARTNER_ID;
+            clearPartner();
         }
         update();
     }

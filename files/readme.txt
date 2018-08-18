@@ -11,10 +11,10 @@
 
 # Student Format:
 # Last Name,First Name,Student ID,In-app alphanumeric one-character ID (if left blank the program will generate one)
-# XX,Nc,Cc,...
+# X/,Nc,Cc,...
 # Each element in this line directly corresponds to each date in the date line, so fewer or equal entries is ok, but
 # more is not.
-# XX: Student did not attend on this day
+# X/: Student did not attend on this day
 # Nc: Student did attend this day, but had no computer. c is the character ID of who they were partnered up with.
 # Cc: Student did attend this day, and had a computer. c is the character ID of who they were partnered up with.
 # '/' in the character ID slot means the student worked alone that day
@@ -22,6 +22,6 @@
 # EXAMPLE FILE
 1/1,01/02,1/03,12/31
 STUDENT,TEST,tst1234,a
-XX,Nb,Cb,N/
+X/,Nb,Cb,N/
 PARTNER,TEST,prt5678,b
-C/,Ca,Na,XX
+C/,Ca,Na,X/

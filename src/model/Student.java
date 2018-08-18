@@ -1,9 +1,6 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class Student {
 
@@ -18,6 +15,9 @@ public class Student {
     private boolean hasID;
     private List<AttendanceDetail> details;
     private DayCalendar calendar;
+
+    private HashMap<Object,Updater> updaters = new HashMap<>();
+
 
     private Student(){}
 
@@ -69,6 +69,10 @@ public class Student {
         return id;
     }
 
+    public void setId(char id){
+        this.id = id;
+    }
+
     public String getFirstName() {
         return firstName;
     }
@@ -92,5 +96,30 @@ public class Student {
             out += detail.toString() + " ";
         }
         return out;
+    }
+
+    public void update(){
+        for(var updater: updaters.values()){
+            updater.update(this.id);
+        }
+    }
+
+    public Object subscribe(Updater updater){
+        Object key = new Object();
+        updaters.put(key,updater);
+        return key;
+    }
+
+    public boolean unsubscribe(Object key){
+        if(updaters.containsKey(key)){
+            updaters.remove(key);
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public interface Updater{
+        void update(char id);
     }
 }
