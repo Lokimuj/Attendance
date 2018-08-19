@@ -1,6 +1,7 @@
 package model;
 
 import java.io.*;
+import java.util.List;
 import java.util.Scanner;
 
 public class Sheet {
@@ -8,9 +9,12 @@ public class Sheet {
 
     private DayCalendar days;
     private StudentRoster roster;
+    private String filename;
 
 
-    public void setup(Scanner file){
+    public void setup(String filename) throws FileNotFoundException {
+        this.filename = filename;
+        Scanner file = new Scanner(new File(filename));
         String line = file.nextLine();
         while(line.startsWith(COMMENT_LINE_CHAR) || line.matches("\\s*")){
             line = file.nextLine();
@@ -41,6 +45,13 @@ public class Sheet {
         System.out.println(days + "\n" + roster);
     }
 
+    public void save(String filename) throws IOException {
+        BufferedWriter bw = new BufferedWriter(new FileWriter(filename));
+        bw.write(days.write() + "\n" + roster.write());
+        bw.flush();
+        bw.close();
+    }
+
     public void run() throws IOException {
         Scanner in = new Scanner(System.in);
         String line;
@@ -62,13 +73,46 @@ public class Sheet {
                     roster.addStudent(new Student(split[1],split[2],split[3],days,roster));
                     display();
                     break;
+                case "p":
+                    if (split.length <2){
+                        System.out.println("usage p index-of-day");
+                        continue;
+                    }
+                    Day day = days.getDay(Integer.parseInt(split[1]));
+                    var pairs = day.pairUp();
+                    System.out.println("PAIRS:");
+                    for(var pair:pairs){
+                        System.out.println(pair);
+                    }
+                    display();
+                    break;
+                case "s":
+                    if(split.length >2){
+                        System.out.println("usage: s [filename]");
+                        continue;
+                    }
+                    this.save((split.length > 1 ? split[1] : this.filename));
+                    System.out.println("File saved!");
+                    break;
+                case "l":
+                    if(split.length<2){
+                        System.out.println("usage: l filename");
+                        continue;
+                    }
+                    System.out.println("Want to save the current configuration first? y/n");
+                    if (in.nextLine().startsWith("y")) {
+                        this.save(this.filename);
+                    }
+                    this.setup(split[1]);
+                    System.out.println("Save loaded!");
+                    break;
             }
         }while(in.hasNext());
     }
 
     public static void main(String[] args) throws IOException {
         Sheet sheet = new Sheet();
-        sheet.setup(new Scanner(new File(args[0])));
+        sheet.setup(args[0]);
         sheet.run();
     }
 }

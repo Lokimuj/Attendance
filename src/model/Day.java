@@ -59,17 +59,34 @@ public class Day {
         ArrayList<StudentPair> pairs = new ArrayList<>();
         int i = 0;
         for(;i<comp.size() && i<noComp.size();i++){
-            pairs.add(new StudentPair(comp.get(i),noComp.get(i)));
+            Student s1 = comp.get(i);
+            Student s2 = noComp.get(i);
+            s1.getDetail(this).changePartner(s2.getId());
+            s2.getDetail(this).changePartner(s1.getId());
+            pairs.add(new StudentPair(s1,s2));
+        }
+        for(;i<comp.size()-1;i+=2){
+            Student s1 = comp.get(i);
+            Student s2 = comp.get(i+1);
+            s1.getDetail(this).changePartner(s2.getId());
+            s2.getDetail(this).changePartner(s1.getId());
+            pairs.add(new StudentPair(s1,s2));
         }
         if(i<comp.size()){
             pairs.add(new StudentPair(comp.get(i),null));
+            comp.get(i).getDetail(this).clearPartner();
         }
 
         for(;i<noComp.size()-1;i+=2){
-            pairs.add(new StudentPair(noComp.get(i),noComp.get(i+1)));
+            Student s1 = noComp.get(i);
+            Student s2 = noComp.get(i+1);
+            s1.getDetail(this).changePartner(s2.getId());
+            s2.getDetail(this).changePartner(s1.getId());
+            pairs.add(new StudentPair(s1,s2));
         }
         if(i<noComp.size()){
             pairs.add(new StudentPair(noComp.get(i),null));
+            comp.get(i).getDetail(this).clearPartner();
         }
 
         return pairs;
@@ -83,7 +100,7 @@ public class Day {
     public String toString() {
         String out = "DAY " + date + ":";
         for(Student student: studentDetails.keySet()){
-            out += "\n" + student.display() + " : " + studentDetails.get(student).write();
+            out += "\n\t" + student.display() + " : " + studentDetails.get(student).write();
         }
         return out;
     }

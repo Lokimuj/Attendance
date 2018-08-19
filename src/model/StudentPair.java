@@ -15,4 +15,9 @@ public class StudentPair {
     public Student getS2() {
         return s2;
     }
+
+    @Override
+    public String toString() {
+        return s1.getId() + "," + (s2!=null ? s2.getId() : '/');
+    }
 }
