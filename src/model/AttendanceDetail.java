@@ -113,9 +113,18 @@ public class AttendanceDetail {
         }
         partner.unsubscribe(partnerKey);
         partnerID = NO_PARTNER_ID;
+
         partner = null;
         partnerKey = null;
         update();
+    }
+
+    public boolean hasPartner(){
+        return partnerID != NO_PARTNER_ID;
+    }
+
+    public Student getPartner(){
+        return partner;
     }
 
     public Type getType() {

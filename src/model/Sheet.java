@@ -12,9 +12,14 @@ public class Sheet {
     private String filename;
 
 
-    public void setup(String filename) throws FileNotFoundException {
+    public boolean setup(String filename) {
         this.filename = filename;
-        Scanner file = new Scanner(new File(filename));
+        Scanner file = null;
+        try {
+            file = new Scanner(new File(filename));
+        } catch (FileNotFoundException e) {
+            return false;
+        }
         String line = file.nextLine();
         while(line.startsWith(COMMENT_LINE_CHAR) || line.matches("\\s*")){
             line = file.nextLine();
@@ -38,18 +43,34 @@ public class Sheet {
         }
         roster.initializeIDs();
         file.close();
-
+        return true;
     }
 
     public void display(){
         System.out.println(days + "\n" + roster);
     }
 
-    public void save(String filename) throws IOException {
-        BufferedWriter bw = new BufferedWriter(new FileWriter(filename));
-        bw.write(days.write() + "\n" + roster.write());
-        bw.flush();
-        bw.close();
+    public void save(String filename){
+        try(
+                BufferedWriter bw = new BufferedWriter(new FileWriter(filename));
+        ){
+            bw.write(days.write() + "\n" + roster.write());
+            bw.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void save(){
+        save(filename);
+    }
+
+    public List<Student> getStudents(){
+        return roster.getStudents();
+    }
+
+    public DayCalendar getDays(){
+        return days;
     }
 
     public void run() throws IOException {

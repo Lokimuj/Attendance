@@ -1,9 +1,6 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class Day {
     private String date;
@@ -90,6 +87,60 @@ public class Day {
         }
 
         return pairs;
+    }
+
+    public List<StudentPair> getPairs(){
+        ArrayList<StudentPair> pairs = new ArrayList<>();
+        Set<Student> paired = new HashSet<>();
+        for(var student:studentDetails.keySet()){
+            if(!paired.contains(student)){
+                StudentPair pair;
+                AttendanceDetail detail = studentDetails.get(student);
+                if(detail.hasPartner()){
+                    pair = new StudentPair(student,detail.getPartner());
+                    paired.add(detail.getPartner());
+                }else{
+                    pair = new StudentPair(student,null);
+                }
+                paired.add(student);
+                pairs.add(pair);
+            }
+        }
+        return pairs;
+    }
+
+    public void clearPartners(){
+        for(AttendanceDetail detail: studentDetails.values()){
+            detail.clearPartner();
+        }
+    }
+
+    public void pairStudents(Student s1, Student s2){
+        AttendanceDetail d1 = studentDetails.get(s1);
+        AttendanceDetail d2 = studentDetails.get(s2);
+        if(d1.hasPartner()){
+            studentDetails.get(d1.getPartner()).clearPartner();
+        }
+        if(d2.hasPartner()){
+            studentDetails.get(d2.getPartner()).clearPartner();
+        }
+        d1.changePartner(s2.getId());
+        d2.changePartner(s1.getId());
+    }
+
+    public void unpair(Student student){
+        AttendanceDetail detail = studentDetails.get(student);
+        if(detail.hasPartner()){
+            studentDetails.get(detail.getPartner()).clearPartner();
+            detail.clearPartner();
+        }
+    }
+
+    public void changeAttendance(Student student, AttendanceDetail.Type type){
+        if(type == AttendanceDetail.Type.ABSENT){
+            unpair(student);
+        }
+        studentDetails.get(student).changeType(type);
     }
 
     public String write(){

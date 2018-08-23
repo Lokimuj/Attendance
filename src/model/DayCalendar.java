@@ -27,6 +27,10 @@ public class DayCalendar {
         return days.get(index);
     }
 
+    public List<Day> getDays() {
+        return new ArrayList<>(days);
+    }
+
     public int size(){
         return days.size();
     }

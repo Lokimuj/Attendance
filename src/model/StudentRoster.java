@@ -31,6 +31,10 @@ public class StudentRoster {
         return idMap.get(id);
     }
 
+    public List<Student> getStudents(){
+        return new ArrayList<>(students);
+    }
+
     public boolean isIDRegistered(char id){
         return usedIDs.contains(id);
     }

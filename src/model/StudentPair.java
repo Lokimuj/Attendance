@@ -16,6 +16,10 @@ public class StudentPair {
         return s2;
     }
 
+    public boolean hasPartner(){
+        return s2!=null;
+    }
+
     @Override
     public String toString() {
         return s1.getId() + "," + (s2!=null ? s2.getId() : '/');
