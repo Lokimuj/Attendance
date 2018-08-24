@@ -6,6 +6,10 @@ import gui.optionbar.windows.WantToSaveWindow;
 import javafx.scene.control.Button;
 import model.Sheet;
 
+
+/**
+ * @author Adrian Postolache axp3806@rit.edu
+ */
 public class LoadButton extends Button {
 
     LoadWindow window;

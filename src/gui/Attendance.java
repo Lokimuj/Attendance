@@ -13,7 +13,9 @@ import model.Sheet;
 import model.Student;
 import model.StudentRoster;
 
-
+/**
+ * @author Adrian Postolache axp3806@rit.edu
+ */
 public class Attendance extends Application {
 
     public static void main(String[] args) {

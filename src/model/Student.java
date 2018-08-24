@@ -2,6 +2,9 @@ package model;
 
 import java.util.*;
 
+/**
+ * @author Adrian Postolache axp3806@rit.edu
+ */
 public class Student {
 
     public static final Student EMPTY_STUDENT = new Student();

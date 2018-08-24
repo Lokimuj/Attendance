@@ -6,6 +6,9 @@ import gui.mainpanel.StudentRow.StudentTile;
 import javafx.scene.layout.VBox;
 import model.Sheet;
 
+/**
+ * @author Adrian Postolache axp3806@rit.edu
+ */
 public class MainPanel extends VBox {
     public static final int LEFT_COLUMN_WIDTH = 120;
     public static final int STUDENT_ROW_HEIGHT = 50;

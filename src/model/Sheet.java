@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
+/**
+ * @author Adrian Postolache axp3806@rit.edu
+ */
 public class Sheet {
     public static final String COMMENT_LINE_CHAR = "#";
 

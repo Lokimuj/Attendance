@@ -15,6 +15,9 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * @author Adrian Postolache axp3806@rit.edu
+ */
 public class PairWindow extends Stage {
 
     public static final int PAIR_GRID_PANE_COLUMNS = 3;

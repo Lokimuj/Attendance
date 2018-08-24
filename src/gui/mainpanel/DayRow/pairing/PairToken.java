@@ -1,3 +1,5 @@
+
+
 package gui.mainpanel.DayRow.pairing;
 
 import javafx.geometry.Insets;
@@ -6,7 +8,9 @@ import javafx.scene.layout.HBox;
 import model.StudentPair;
 
 
-
+/**
+ * @author Adrian Postolache axp3806@rit.edu
+ */
 public class PairToken extends HBox {
 
     public static final String BG_COLOR = "-fx-background-color: #FF9999;";

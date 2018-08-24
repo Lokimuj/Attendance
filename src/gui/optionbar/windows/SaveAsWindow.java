@@ -12,6 +12,9 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import model.Sheet;
 
+/**
+ * @author Adrian Postolache axp3806@rit.edu
+ */
 public class SaveAsWindow extends Stage {
 
     SaveAsButton button;

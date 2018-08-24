@@ -6,6 +6,9 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import model.Student;
 
+/**
+ * @author Adrian Postolache axp3806@rit.edu
+ */
 public class StudentTile extends VBox {
 
 

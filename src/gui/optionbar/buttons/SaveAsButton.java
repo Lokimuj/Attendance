@@ -4,6 +4,9 @@ import gui.optionbar.windows.SaveAsWindow;
 import javafx.scene.control.Button;
 import model.Sheet;
 
+/**
+ * @author Adrian Postolache axp3806@rit.edu
+ */
 public class SaveAsButton extends Button {
 
     boolean isWindowOpen = false;

@@ -3,6 +3,9 @@ package model;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * @author Adrian Postolache axp3806@rit.edu
+ */
 public class AttendanceDetail {
     public static final char NO_PARTNER_ID = '/';
     public static final char ABSENT_PREFIX = 'X';

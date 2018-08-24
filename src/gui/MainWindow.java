@@ -7,6 +7,9 @@ import model.DayCalendar;
 import model.Sheet;
 import model.StudentRoster;
 
+/**
+ * @author Adrian Postolache axp3806@rit.edu
+ */
 public class MainWindow extends BorderPane {
 
 

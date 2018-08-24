@@ -10,6 +10,9 @@ import javafx.scene.paint.Color;
 import model.AttendanceDetail;
 import model.Student;
 
+/**
+ * @author Adrian Postolache axp3806@rit.edu
+ */
 public class StudentToken extends VBox {
 
     public static final int TOKEN_WIDTH = 100;

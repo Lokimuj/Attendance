@@ -1,5 +1,8 @@
 package model;
 
+/**
+ * @author Adrian Postolache axp3806@rit.edu
+ */
 public class StudentPair {
     public Student s1, s2;
 

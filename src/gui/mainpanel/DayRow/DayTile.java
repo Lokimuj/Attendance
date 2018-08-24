@@ -12,6 +12,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import model.Day;
 
+/**
+ * @author Adrian Postolache axp3806@rit.edu
+ */
 public class DayTile extends VBox {
 
     Day day;

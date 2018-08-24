@@ -9,7 +9,9 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.Sheet;
 
-
+/**
+ * @author Adrian Postolache axp3806@rit.edu
+ */
 public class LoadWindow extends Stage {
 
     public LoadWindow(Sheet sheet){

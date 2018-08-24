@@ -11,6 +11,9 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import model.AttendanceDetail;
 
+/**
+ * @author Adrian Postolache axp3806@rit.edu
+ */
 public class DetailTile extends VBox {
 
     public static final String ABSENT_STYLE = "-fx-background-color: #DD4444;";

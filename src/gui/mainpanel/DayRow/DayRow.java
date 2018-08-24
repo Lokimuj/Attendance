@@ -10,6 +10,9 @@ import model.Sheet;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Adrian Postolache axp3806@rit.edu
+ */
 public class DayRow extends HBox {
     public static final int DAY_ROW_HEIGHT = 50;
 

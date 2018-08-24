@@ -10,6 +10,9 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.Sheet;
 
+/**
+ * @author Adrian Postolache axp3806@rit.edu
+ */
 public class WantToSaveWindow extends Stage {
 
     private final Sheet sheet;

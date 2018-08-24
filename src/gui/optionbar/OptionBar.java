@@ -8,6 +8,9 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import model.Sheet;
 
+/**
+ * @author Adrian Postolache axp3806@rit.edu
+ */
 public class OptionBar extends HBox {
 
     public static final int BUTTON_HEIGHT = 14;

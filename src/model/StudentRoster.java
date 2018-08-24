@@ -2,6 +2,9 @@ package model;
 
 import java.util.*;
 
+/**
+ * @author Adrian Postolache axp3806@rit.edu
+ */
 public class StudentRoster {
     private Set<Character> usedIDs = new HashSet<>();
     private Map<Character,Student> idMap = new HashMap<>();

@@ -11,6 +11,9 @@ import model.StudentRoster;
 
 import java.util.List;
 
+/**
+ * @author Adrian Postolache axp3806@rit.edu
+ */
 public class StudentRow extends HBox {
 
     public static final String HIGHLIGHT_STYLE = "-fx-background-color: #DDDDFF;";

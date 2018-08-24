@@ -5,6 +5,9 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * @author Adrian Postolache axp3806@rit.edu
+ */
 public class DayCalendar {
     private HashMap<Day,Integer> indexMap = new HashMap<>();
     private List<Day> days = new ArrayList<>();
