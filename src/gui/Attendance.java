@@ -1,11 +1,13 @@
 package gui;
 
+import gui.mainpanel.MainPanel;
 import gui.optionbar.OptionBar;
 import gui.optionbar.windows.SaveAsWindow;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.Sheet;
 import model.Student;
@@ -29,7 +31,7 @@ public class Attendance extends Application {
         });
         OptionBar bar = new OptionBar(sheet);
         bar.getChildren().add(add);
-        primaryStage.setScene(new Scene(bar));
+        primaryStage.setScene(new Scene(new VBox(bar,new MainPanel(sheet))));
         primaryStage.show();
     }
 }

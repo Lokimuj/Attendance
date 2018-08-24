@@ -2,8 +2,8 @@ package gui.mainpanel.DayRow;
 
 import gui.mainpanel.MainPanel;
 import javafx.scene.Node;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import model.Day;
 import model.Sheet;
 
@@ -18,7 +18,10 @@ public class DayRow extends HBox {
         this.setHeight(DAY_ROW_HEIGHT);
         Pane empty = new Pane();
         empty.setPrefHeight(DAY_ROW_HEIGHT);
-        empty.setPrefWidth(MainPanel.LEFT_COLUMN_WIDTH);
+        empty.setMaxWidth(MainPanel.LEFT_COLUMN_WIDTH);
+        empty.setMinWidth(MainPanel.LEFT_COLUMN_WIDTH);
+        empty.setBorder(new Border(new BorderStroke(Color.BLACK,
+                BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
         List<Node> children = this.getChildren();
         children.add(empty);
         for(Day day:sheet.getDays().getDays()){
