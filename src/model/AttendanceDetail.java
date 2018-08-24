@@ -113,7 +113,6 @@ public class AttendanceDetail {
         }
         partner.unsubscribe(partnerKey);
         partnerID = NO_PARTNER_ID;
-
         partner = null;
         partnerKey = null;
         update();

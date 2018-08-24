@@ -8,6 +8,7 @@ import model.Student;
 
 public class StudentTile extends VBox {
 
+
     public StudentTile(Student student) {
         super();
         this.setHeight(MainPanel.STUDENT_ROW_HEIGHT);

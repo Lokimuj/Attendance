@@ -13,18 +13,20 @@ import model.AttendanceDetail;
 
 public class DetailTile extends VBox {
 
-    public static final String ABSENT_STYLE = "-fx-background-color: #DD0000;";
-    public static final String NO_COMP_STYLE = "-fx-background-color: #DDDD00;";
-    public static final String COMP_STYLE = "-fx-background-color: #00DD00;";
+    public static final String ABSENT_STYLE = "-fx-background-color: #DD4444;";
+    public static final String NO_COMP_STYLE = "-fx-background-color: #DDDD44;";
+    public static final String COMP_STYLE = "-fx-background-color: #44DD44;";
 
     AttendanceDetail detail;
+    Label partnerID;
+    Object detailKey;
 
 
     public DetailTile(AttendanceDetail detail) {
         super();
 
         this.detail = detail;
-        detail.subscribe((t,c)->update());
+        detailKey = detail.subscribe((t,c)->update());
 
         this.setHeight(MainPanel.STUDENT_ROW_HEIGHT);
         this.setMinWidth(MainPanel.DETAIL_CELL_WIDTH);
@@ -74,7 +76,7 @@ public class DetailTile extends VBox {
                 break;
         }
 
-        Label partnerID = new Label((detail.hasPartner() ? detail.getPartnerID() : "None")+"");
+        partnerID = new Label((detail.hasPartner() ? detail.getPartnerID() : "None")+"");
 
         this.getChildren().addAll(buttons,partnerID);
     }
@@ -92,7 +94,7 @@ public class DetailTile extends VBox {
                 this.setStyle(NO_COMP_STYLE);
                 break;
         }
-        Label partnerID = new Label((detail.hasPartner() ? detail.getPartnerID() : "None")+"");
+        partnerID.setText((detail.hasPartner() ? detail.getPartnerID() : "None")+"");
     }
 
 }

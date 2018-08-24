@@ -1,7 +1,9 @@
 package model;
 
 import java.io.*;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 public class Sheet {
@@ -11,6 +13,7 @@ public class Sheet {
     private StudentRoster roster;
     private String filename;
 
+    private Map<Object,Refresher> refreshers = new HashMap<>();
 
     public boolean setup(String filename) {
         this.filename = filename;
@@ -43,6 +46,7 @@ public class Sheet {
         }
         roster.initializeIDs();
         file.close();
+        refresh();
         return true;
     }
 
@@ -129,6 +133,26 @@ public class Sheet {
                     break;
             }
         }while(in.hasNext());
+    }
+
+    public Object subscribe(Refresher refresher){
+        Object key = new Object();
+        refreshers.put(key,refresher);
+        return key;
+    }
+
+    public void unsubscribe(Object key){
+        refreshers.remove(key);
+    }
+
+    public void refresh(){
+        for(Refresher refresher:refreshers.values()){
+            refresher.refresh();
+        }
+    }
+
+    public interface Refresher{
+        void refresh();
     }
 
     public static void main(String[] args) throws IOException {

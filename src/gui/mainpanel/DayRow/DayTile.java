@@ -1,6 +1,7 @@
 package gui.mainpanel.DayRow;
 
 
+import gui.mainpanel.DayRow.pairing.PairWindow;
 import gui.mainpanel.MainPanel;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -31,6 +32,9 @@ public class DayTile extends VBox {
         pairs.setFont(new Font(9));
         pairs.setStyle("-fx-background-color: #AA88FF;");
         pairs.setMinWidth(MainPanel.DETAIL_CELL_WIDTH/2 -5);
+        pairs.setOnAction(e->{
+            new PairWindow(day).show();
+        });
 
 
         Button report = new Button("report");

@@ -24,14 +24,7 @@ public class Attendance extends Application {
     public void start(Stage primaryStage) {
         Sheet sheet = new Sheet();
         sheet.setup("files/readme.txt");
-        StudentRoster roster = sheet.getRoster();
-        Button add = new Button("add");
-        add.setOnAction(e->{
-            roster.addStudent(new Student("name","name","id",sheet.getDays(),roster));
-        });
-        OptionBar bar = new OptionBar(sheet);
-        bar.getChildren().add(add);
-        primaryStage.setScene(new Scene(new VBox(bar,new MainPanel(sheet))));
+        primaryStage.setScene(new Scene(new MainWindow(sheet)));
         primaryStage.show();
     }
 }

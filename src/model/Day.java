@@ -87,7 +87,7 @@ public class Day {
         }
         if(i<noComp.size()){
             pairs.add(new StudentPair(noComp.get(i),null));
-            comp.get(i).getDetail(this).clearPartner();
+            noComp.get(i).getDetail(this).clearPartner();
         }
 
         return pairs;
@@ -100,6 +100,9 @@ public class Day {
             if(!paired.contains(student)){
                 StudentPair pair;
                 AttendanceDetail detail = studentDetails.get(student);
+                if(detail.getType() == AttendanceDetail.Type.ABSENT){
+                    continue;
+                }
                 if(detail.hasPartner()){
                     pair = new StudentPair(student,detail.getPartner());
                     paired.add(detail.getPartner());
