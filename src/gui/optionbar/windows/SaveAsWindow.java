@@ -20,6 +20,7 @@ public class SaveAsWindow extends Stage {
     SaveAsWindow self;
 
 
+
     public SaveAsWindow(SaveAsButton button, Sheet sheet){
         super();
         this.button = button;
@@ -78,10 +79,12 @@ public class SaveAsWindow extends Stage {
 
 
     @Override
+    public void hide() {
+        super.hide();
+    }
+
+    @Override
     public void close() {
         super.close();
-        if(isFromButton){
-            button.windowClosed();
-        }
     }
 }

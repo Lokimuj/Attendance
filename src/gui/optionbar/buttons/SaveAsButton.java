@@ -7,13 +7,16 @@ import model.Sheet;
 public class SaveAsButton extends Button {
 
     boolean isWindowOpen = false;
+    SaveAsWindow window;
 
     public SaveAsButton(Sheet sheet){
         super("SAVE AS...");
+        window = new SaveAsWindow(this, sheet);
+
         this.setOnAction(e->{
-            if(!isWindowOpen){
-                isWindowOpen = true;
-                new SaveAsWindow(this, sheet).show();
+            if(!window.isShowing()){
+                window.setup();
+                window.show();
             }
         });
     }

@@ -65,8 +65,8 @@ public class Sheet {
         save(filename);
     }
 
-    public List<Student> getStudents(){
-        return roster.getStudents();
+    public StudentRoster getRoster(){
+        return roster;
     }
 
     public DayCalendar getDays(){

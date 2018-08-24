@@ -1,5 +1,9 @@
 package gui.optionbar;
 
+import gui.optionbar.buttons.LoadButton;
+import gui.optionbar.buttons.SaveAsButton;
+import gui.optionbar.buttons.SaveButton;
+import gui.optionbar.windows.LoadWindow;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import model.Sheet;
@@ -10,7 +14,9 @@ public class OptionBar extends HBox {
 
     public OptionBar(Sheet sheet){
         super();
-        Button save = new Button("SAVE");
-        save.setOnAction(e->sheet.save());
+        SaveButton save = new SaveButton(sheet);
+        SaveAsButton saveAs = new SaveAsButton(sheet);
+        LoadButton load = new LoadButton(sheet);
+        this.getChildren().addAll(save,saveAs,load);
     }
 }

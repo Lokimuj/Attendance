@@ -39,6 +39,10 @@ public class Day {
         }
     }
 
+    public String getDate(){
+        return date;
+    }
+
     public synchronized List<Student> getNoComp(){
         return noComp;
     }
