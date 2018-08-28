@@ -61,11 +61,12 @@ public class Sheet {
     }
 
 
-    public void enrollNewStudent(String firstName, String lastName, String ritID){
+    public void enrollNewStudent(String firstName, String lastName, String ritID, boolean refresh){
         Student student = new Student(firstName,lastName,ritID,days,roster);
-        student.setup(roster,"");
         roster.addStudent(student);
-        refresh();
+        if(refresh) {
+            refresh();
+        }
     }
 
     public boolean setup(Scanner file){

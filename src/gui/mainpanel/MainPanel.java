@@ -4,6 +4,7 @@ import gui.MainWindow;
 import gui.mainpanel.DayRow.DayRow;
 import gui.mainpanel.StudentRow.StudentRow;
 import gui.mainpanel.StudentRow.StudentTile;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 import model.Sheet;
 
@@ -16,10 +17,18 @@ public class MainPanel extends VBox {
     public static final int DETAIL_CELL_WIDTH = 120;
 
     Sheet sheet;
+    ScrollPane studentsScroller;
+    VBox students;
 
     public MainPanel(Sheet sheet, MainWindow mainWindow){
         super();
         this.sheet = sheet;
+        students = new VBox();
+        studentsScroller = new ScrollPane(students);
+        studentsScroller.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        studentsScroller.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        this.setMaxWidth(mainWindow.getWidth());
+        this.setMaxHeight(800);
         sheet.subscribe(()->{
             this.refresh();
             mainWindow.refresh();
@@ -28,10 +37,12 @@ public class MainPanel extends VBox {
 
     public void refresh(){
         this.getChildren().clear();
-        this.getChildren().addAll(new DayRow(sheet));
+        students.getChildren().clear();
+        this.getChildren().add(new DayRow(sheet));
         for(var student:sheet.getRoster().getStudents()){
-            this.getChildren().add(new StudentRow(student));
+            students.getChildren().add(new StudentRow(student));
         }
+        this.getChildren().add(studentsScroller);
     }
 
 }

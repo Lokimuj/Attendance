@@ -53,11 +53,16 @@ public class Student {
     }
 
     public void setup(StudentRoster roster, String inp){
-        String[] detailDays = inp.split(",");
+        ArrayList<String> detailDays;
+        if(inp.equals("")){
+            detailDays = new ArrayList<>();
+        }else {
+            detailDays = new ArrayList<>(Arrays.asList(inp.split(",")));
+        }
         for(int i = 0; i<calendar.size(); i++){
             AttendanceDetail detail;
-            if(i<detailDays.length){
-                String day = detailDays[i].trim();
+            if(i<detailDays.size()){
+                String day = detailDays.get(i).trim();
                 detail = AttendanceDetail.readAttendanceDetail(roster, day.replaceAll("\\s+",""));
             } else{
                 detail = AttendanceDetail.CreateAbsentDetail(roster);

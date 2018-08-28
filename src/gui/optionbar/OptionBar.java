@@ -1,9 +1,6 @@
 package gui.optionbar;
 
-import gui.optionbar.buttons.LoadButton;
-import gui.optionbar.buttons.NewFileButton;
-import gui.optionbar.buttons.SaveAsButton;
-import gui.optionbar.buttons.SaveButton;
+import gui.optionbar.buttons.*;
 import gui.optionbar.windows.LoadWindow;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
@@ -22,6 +19,7 @@ public class OptionBar extends HBox {
         SaveAsButton saveAs = new SaveAsButton(sheet);
         LoadButton load = new LoadButton(sheet);
         NewFileButton newFile = new NewFileButton(sheet);
-        this.getChildren().addAll(save,saveAs,load,newFile);
+        AddStudentsButton addStudents = new AddStudentsButton(sheet);
+        this.getChildren().addAll(save,saveAs,load,newFile,addStudents);
     }
 }
