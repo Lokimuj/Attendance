@@ -1,6 +1,7 @@
 package gui.optionbar;
 
 import gui.optionbar.buttons.LoadButton;
+import gui.optionbar.buttons.NewFileButton;
 import gui.optionbar.buttons.SaveAsButton;
 import gui.optionbar.buttons.SaveButton;
 import gui.optionbar.windows.LoadWindow;
@@ -20,6 +21,7 @@ public class OptionBar extends HBox {
         SaveButton save = new SaveButton(sheet);
         SaveAsButton saveAs = new SaveAsButton(sheet);
         LoadButton load = new LoadButton(sheet);
-        this.getChildren().addAll(save,saveAs,load);
+        NewFileButton newFile = new NewFileButton(sheet);
+        this.getChildren().addAll(save,saveAs,load,newFile);
     }
 }

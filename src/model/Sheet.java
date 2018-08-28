@@ -15,22 +15,29 @@ public class Sheet {
     private DayCalendar days;
     private StudentRoster roster;
     private String filename;
+    private boolean isNewFile = true;
 
     private Map<Object,Refresher> refreshers = new HashMap<>();
 
     public boolean setup(String filename) {
-        this.filename = filename;
-        Scanner file = null;
+
+        Scanner file;
         try {
             file = new Scanner(new File(filename));
         } catch (FileNotFoundException e) {
             return false;
         }
+        isNewFile = false;
+        this.filename = filename;
+        return setupHelper(file);
+    }
+
+    private boolean setupHelper(Scanner file){
         String line = file.nextLine();
         while(line.startsWith(COMMENT_LINE_CHAR) || line.matches("\\s*")){
             line = file.nextLine();
         }
-        days = new DayCalendar(line.replaceAll("\\s+",""));
+        days = new DayCalendar(line);
         roster = new StudentRoster();
         boolean readingDetails = false;
         Student curStudent = Student.EMPTY_STUDENT;
@@ -53,11 +60,25 @@ public class Sheet {
         return true;
     }
 
+
+    public void enrollNewStudent(String firstName, String lastName, String ritID){
+        Student student = new Student(firstName,lastName,ritID,days,roster);
+        student.setup(roster,"");
+        roster.addStudent(student);
+        refresh();
+    }
+
+    public boolean setup(Scanner file){
+       this.filename = null;
+       this.isNewFile = true;
+       return setupHelper(file);
+    }
+
     public void display(){
         System.out.println(days + "\n" + roster);
     }
 
-    public void save(String filename){
+    public boolean save(String filename){
         try(
                 BufferedWriter bw = new BufferedWriter(new FileWriter(filename));
         ){
@@ -65,11 +86,16 @@ public class Sheet {
             bw.flush();
         } catch (IOException e) {
             e.printStackTrace();
+            return false;
         }
+        return true;
     }
 
-    public void save(){
-        save(filename);
+    public boolean save(){
+        if(isNewFile){
+            return false;
+        }
+        return save(filename);
     }
 
     public StudentRoster getRoster(){

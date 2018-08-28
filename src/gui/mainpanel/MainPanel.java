@@ -1,5 +1,6 @@
 package gui.mainpanel;
 
+import gui.MainWindow;
 import gui.mainpanel.DayRow.DayRow;
 import gui.mainpanel.StudentRow.StudentRow;
 import gui.mainpanel.StudentRow.StudentTile;
@@ -16,11 +17,13 @@ public class MainPanel extends VBox {
 
     Sheet sheet;
 
-    public MainPanel(Sheet sheet){
+    public MainPanel(Sheet sheet, MainWindow mainWindow){
         super();
         this.sheet = sheet;
-        sheet.subscribe(this::refresh);
-        refresh();
+        sheet.subscribe(()->{
+            this.refresh();
+            mainWindow.refresh();
+        });
     }
 
     public void refresh(){

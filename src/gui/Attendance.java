@@ -25,8 +25,7 @@ public class Attendance extends Application {
     @Override
     public void start(Stage primaryStage) {
         Sheet sheet = new Sheet();
-        sheet.setup("files/readme.txt");
-        primaryStage.setScene(new Scene(new MainWindow(sheet)));
+        primaryStage.setScene(new Scene(new MainWindow(sheet,primaryStage)));
         primaryStage.show();
     }
 }
