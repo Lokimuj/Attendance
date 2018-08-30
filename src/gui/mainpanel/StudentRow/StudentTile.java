@@ -16,6 +16,7 @@ public class StudentTile extends VBox {
         super();
         this.setHeight(MainPanel.STUDENT_ROW_HEIGHT);
         this.setMinWidth(MainPanel.LEFT_COLUMN_WIDTH);
+        this.setMaxWidth(MainPanel.LEFT_COLUMN_WIDTH);
         this.setBorder(new Border(new BorderStroke(Color.BLACK,
                 BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
         Label id = new Label(student.getId()+"");

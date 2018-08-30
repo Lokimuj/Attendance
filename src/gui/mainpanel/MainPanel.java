@@ -2,6 +2,7 @@ package gui.mainpanel;
 
 import gui.MainWindow;
 import gui.mainpanel.DayRow.DayRow;
+import gui.mainpanel.StudentRow.RowLoadVBox;
 import gui.mainpanel.StudentRow.StudentRow;
 import gui.mainpanel.StudentRow.StudentTile;
 import javafx.scene.control.ScrollPane;
@@ -18,13 +19,12 @@ public class MainPanel extends VBox {
 
     Sheet sheet;
     ScrollPane studentsScroller;
-    VBox students;
+    SignatureLabel signature = new SignatureLabel();
 
     public MainPanel(Sheet sheet, MainWindow mainWindow){
         super();
         this.sheet = sheet;
-        students = new VBox();
-        studentsScroller = new ScrollPane(students);
+        studentsScroller = new ScrollPane();
         studentsScroller.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         studentsScroller.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
         this.setMaxWidth(mainWindow.getWidth());
@@ -37,12 +37,8 @@ public class MainPanel extends VBox {
 
     public void refresh(){
         this.getChildren().clear();
-        students.getChildren().clear();
-        this.getChildren().add(new DayRow(sheet));
-        for(var student:sheet.getRoster().getStudents()){
-            students.getChildren().add(new StudentRow(student));
-        }
-        this.getChildren().add(studentsScroller);
+        studentsScroller.setContent(new RowLoadVBox(sheet.getRoster().getStudents()));
+        this.getChildren().addAll(new DayRow(sheet),studentsScroller,signature);
     }
 
 }

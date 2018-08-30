@@ -33,6 +33,7 @@ public class DetailTile extends VBox {
 
         this.setHeight(MainPanel.STUDENT_ROW_HEIGHT);
         this.setMinWidth(MainPanel.DETAIL_CELL_WIDTH);
+        this.setMaxWidth(MainPanel.DETAIL_CELL_WIDTH);
         this.setAlignment(Pos.CENTER);
         this.setBorder(new Border(new BorderStroke(Color.BLACK,
                 BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
@@ -40,14 +41,16 @@ public class DetailTile extends VBox {
 
         RadioButton absent = new RadioButton("X");
         absent.setContentDisplay(ContentDisplay.BOTTOM);
+        absent.setMaxWidth(MainPanel.LEFT_COLUMN_WIDTH/6);
         absent.setToggleGroup(attendance);
         absent.setPadding(new Insets(3));
         absent.setOnAction(e->{
             detail.changeType(AttendanceDetail.Type.ABSENT);
         });
 
-        RadioButton noComp = new RadioButton("NC");
+        RadioButton noComp = new RadioButton("N");
         noComp.setContentDisplay(ContentDisplay.BOTTOM);
+        noComp.setMaxWidth(MainPanel.LEFT_COLUMN_WIDTH/6);
         noComp.setToggleGroup(attendance);
         noComp.setPadding(new Insets(3));
         noComp.setOnAction(e->{
@@ -56,13 +59,28 @@ public class DetailTile extends VBox {
 
         RadioButton comp = new RadioButton("C");
         comp.setContentDisplay(ContentDisplay.BOTTOM);
+        comp.setMaxWidth(MainPanel.LEFT_COLUMN_WIDTH/6);
         comp.setToggleGroup(attendance);
         comp.setPadding(new Insets(3));
         comp.setOnAction(e->{
             detail.changeType(AttendanceDetail.Type.COMPUTER);
         });
 
-        HBox buttons = new HBox(absent,noComp,comp);
+
+        HBox buttons = new HBox();
+
+        for(AttendanceDetail.Type type:AttendanceDetail.Type.values()){
+            RadioButton button = new RadioButton(""+type.print());
+            button.setContentDisplay(ContentDisplay.BOTTOM);
+            button.setMaxWidth(MainPanel.LEFT_COLUMN_WIDTH/6);
+            button.setToggleGroup(attendance);
+            button.setPadding(new Insets(3));
+            button.setOnAction(e->{
+                detail.changeType(type);
+            });
+            buttons.getChildren().add(button);
+        }
+
         buttons.setAlignment(Pos.CENTER);
         switch (detail.getType()){
             case ABSENT:
