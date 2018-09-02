@@ -88,6 +88,9 @@ public class Sheet {
         } catch (IOException e) {
             e.printStackTrace();
             return false;
+        }catch(Exception e){
+            e.printStackTrace();
+            return false;
         }
         return true;
     }

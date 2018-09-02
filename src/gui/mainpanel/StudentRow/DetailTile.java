@@ -39,34 +39,6 @@ public class DetailTile extends VBox {
                 BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
         ToggleGroup attendance = new ToggleGroup();
 
-        RadioButton absent = new RadioButton("X");
-        absent.setContentDisplay(ContentDisplay.BOTTOM);
-        absent.setMaxWidth(MainPanel.LEFT_COLUMN_WIDTH/6);
-        absent.setToggleGroup(attendance);
-        absent.setPadding(new Insets(3));
-        absent.setOnAction(e->{
-            detail.changeType(AttendanceDetail.Type.ABSENT);
-        });
-
-        RadioButton noComp = new RadioButton("N");
-        noComp.setContentDisplay(ContentDisplay.BOTTOM);
-        noComp.setMaxWidth(MainPanel.LEFT_COLUMN_WIDTH/6);
-        noComp.setToggleGroup(attendance);
-        noComp.setPadding(new Insets(3));
-        noComp.setOnAction(e->{
-            detail.changeType(AttendanceDetail.Type.NO_COMPUTER);
-        });
-
-        RadioButton comp = new RadioButton("C");
-        comp.setContentDisplay(ContentDisplay.BOTTOM);
-        comp.setMaxWidth(MainPanel.LEFT_COLUMN_WIDTH/6);
-        comp.setToggleGroup(attendance);
-        comp.setPadding(new Insets(3));
-        comp.setOnAction(e->{
-            detail.changeType(AttendanceDetail.Type.COMPUTER);
-        });
-
-
         HBox buttons = new HBox();
 
         for(AttendanceDetail.Type type:AttendanceDetail.Type.values()){
@@ -78,24 +50,25 @@ public class DetailTile extends VBox {
             button.setOnAction(e->{
                 detail.changeType(type);
             });
+            if(detail.getType() == type){
+                button.setSelected(true);
+                switch (detail.getType()){
+                    case ABSENT:
+                        this.setStyle(ABSENT_STYLE);
+                        break;
+                    case COMPUTER:
+                        this.setStyle(COMP_STYLE);
+                        break;
+                    case NO_COMPUTER:
+                        this.setStyle(NO_COMP_STYLE);
+                        break;
+                }
+            }
             buttons.getChildren().add(button);
         }
 
         buttons.setAlignment(Pos.CENTER);
-        switch (detail.getType()){
-            case ABSENT:
-                absent.setSelected(true);
-                this.setStyle(ABSENT_STYLE);
-                break;
-            case COMPUTER:
-                comp.setSelected(true);
-                this.setStyle(COMP_STYLE);
-                break;
-            case NO_COMPUTER:
-                noComp.setSelected(true);
-                this.setStyle(NO_COMP_STYLE);
-                break;
-        }
+
 
         partnerID = new Label((detail.hasPartner() ? detail.getPartnerID() : "None")+"");
 
