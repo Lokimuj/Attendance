@@ -62,7 +62,7 @@ public class Sheet {
 
 
     public void enrollNewStudent(String firstName, String lastName, String ritID, boolean refresh){
-        Student student = new Student(firstName,lastName,ritID,days,roster);
+        Student student = new Student(lastName,firstName,ritID,days,roster);
         roster.addStudent(student);
         if(refresh) {
             refresh();
