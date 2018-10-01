@@ -13,27 +13,32 @@ import java.util.List;
 
 public class RowLoadVBox extends VBox implements SoftDisablable{
 
+    public static final float DIVISION_FACTOR = 2;
+    public static final int MAX_GROUP_SIZE = 3;
+
     public RowLoadVBox(){}
 
     List<EventHandler<MouseEvent>> handlers;
     public RowLoadVBox(List<Student> studentRows){
         super();
-        double third = studentRows.size()/3.0;
-        if(third<2){
+         //Don't mind the var name
+        if(studentRows.size()<MAX_GROUP_SIZE){
             for(Student student:studentRows){
                 this.getChildren().add(new StudentRow(student));
             }
         }else{
+            double third = studentRows.size()/DIVISION_FACTOR;
             third = Math.ceil(third);
             handlers = new ArrayList<>();
-            for(int i = 0; i<3;i++){
+            for(int i = 0; i<DIVISION_FACTOR;i++){
                 Integer index = new Integer(i);
-                RowLoadVBox box = new RowLoadVBox(studentRows.subList(i*(int)third,(i<2 ? (i+1)*(int)third:studentRows.size())));
+                RowLoadVBox box = new RowLoadVBox(studentRows.subList(i*(int)third,(i<DIVISION_FACTOR-1 ? (i+1)*(int)third :
+                                                                                    studentRows.size())));
 
                 handlers.add(e->{
 
                     box.softEnable();
-                    for(int j = 0; j<3; j++){
+                    for(int j = 0; j<DIVISION_FACTOR; j++){
                         if(j==index){
                             continue;
                         }

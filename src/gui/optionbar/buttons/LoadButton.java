@@ -24,7 +24,11 @@ public class LoadButton extends Button {
         this.setHeight(OptionBar.BUTTON_HEIGHT);
         this.setOnAction(e->{
             if(!wannaSave.isShowing() && !window.isShowing()){
-                wannaSave.show();
+                if(sheet.isLoaded()) {
+                    wannaSave.show();
+                }else{
+                    window.show();
+                }
             }
 
         });

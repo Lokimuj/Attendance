@@ -15,7 +15,12 @@ public class Sheet {
     private DayCalendar days;
     private StudentRoster roster;
     private String filename;
+
+
+
     private boolean isNewFile = true;
+
+    private boolean isLoaded = false;
 
     private Map<Object,Refresher> refreshers = new HashMap<>();
 
@@ -56,10 +61,18 @@ public class Sheet {
         }
         roster.initializeIDs();
         file.close();
+        isLoaded = true;
         refresh();
         return true;
     }
 
+    public boolean isNewFile() {
+        return isNewFile;
+    }
+
+    public boolean isLoaded() {
+        return isLoaded;
+    }
 
     public void enrollNewStudent(String firstName, String lastName, String ritID, boolean refresh){
         Student student = new Student(lastName,firstName,ritID,days,roster);

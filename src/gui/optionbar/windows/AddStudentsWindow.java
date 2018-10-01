@@ -61,6 +61,7 @@ public class AddStudentsWindow extends Stage {
             try {
                 Scanner file = new Scanner(new File(filename.getText()));
                 addFromMycoursesFile(file);
+                this.close();
             } catch (FileNotFoundException e1) {
                 readerError.setText("File not found");
             }

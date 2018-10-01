@@ -19,7 +19,12 @@ public class NewFileButton extends Button {
 
         this.setOnAction(e->{
             if(!wannaSave.isShowing() && !window.isShowing()){
-                wannaSave.show();
+                if(sheet.isLoaded()) {
+                    System.out.println(sheet.isLoaded());
+                    wannaSave.show();
+                }else{
+                    window.show();
+                }
             }
         });
     }
